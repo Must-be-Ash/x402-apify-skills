@@ -1,6 +1,6 @@
 # GEO Content Radar — Endpoints & Request Bodies
 
-All calls are **x402 paid requests** (USDC on Base, scheme `exact`) — make them with whatever x402 mechanism the agent has (private key + x402 client, Coinbase AgentKit/x402 CLI, Agentcash MCP, Sponge MCP, etc.). Build the JSON body exactly as shown; only change the values.
+All calls are **x402 paid requests** (USDC on Base, scheme `exact`) — make them with whatever x402 mechanism the agent has (private key + x402 client, Coinbase Awal, Agentcash MCP, Sponge MCP, etc.). Build the JSON body exactly as shown; only change the values.
 
 **Timeout cause (rail-independent):** the Apify `run-sync-get-dataset-items` endpoint holds the HTTP connection open until the actor finishes; a heavy run (multiple queries × multiple AI engines ≈ 90s+) exceeds the typical client/transport read-timeout (~60–90s) and the request fails — **the Apify actor itself is fine, and this is not specific to any wallet/MCP.** Keep each call small (one AI engine) so it returns in time. (Apify's async run API avoids the long block but generally needs an Apify API key, which breaks the keyless x402 model — so prefer small synchronous calls.)
 

@@ -29,7 +29,7 @@ Every leg is a **paid x402 call** (USDC on Base, scheme `exact`), made with what
 
 **Video (the costly leg — ASK the user which option before rendering).** No lip-sync/talking-avatar endpoint exists, so the output is a faceless clip whose **audio the video model generates itself from your prompt** — put the spoken line + sound/music in the prompt; there is **no separate voiceover step**. Single-call coherent AI video caps ~15s (that's the ceiling for one clip).
 - **DEFAULT — Sora 2, ~8–12s, native audio, ~$0.84.** Simplest: POST pays, then poll the result with a normal x402 payment. Cheapest good option.
-- **LONGER — Seedance 2 Pro, up to 15s, native audio. ~$1.35 at 480p / ~$3.60 at 720p** (pick resolution to fit budget). Its result is pulled via **SIWX** instead of a paid poll — see Step 6 / endpoints.md.
+- **LONGER — Seedance 2 Pro, up to 15s, native audio, 720p, ~$3.60.** Use only when you need 13–15s (for ≤12s, Sora 2 is cheaper and simpler). To cut cost, shorten `duration` — keep 720p (don't drop resolution). Its result is pulled via **SIWX** instead of a paid poll — see Step 6 / endpoints.md.
 
 > **What is SIWX?** "Sign-In-With-X" — an x402 extension where, instead of paying again to fetch your result, you prove you're the wallet that already paid by **signing a short challenge** (like Sign-In-With-Ethereum). The result endpoint answers an unpaid GET with a 402 carrying a `sign-in-with-x` challenge (a nonce); you sign it with the **same wallet that paid** and resend. It's free. Your x402 client must support SIWX to pull these results — many x402 v2 clients do it automatically; if not, you sign the challenge and attach it yourself.
 
@@ -37,7 +37,7 @@ Every leg is a **paid x402 call** (USDC on Base, scheme `exact`), made with what
 
 ## Step 0 — Inputs
 Capture: **product/service**, **niche**, **region** (countryCode), and target **length** (seconds). Derive niche hashtags + product keywords.
-**Then ASK the user which video model before rendering** (costly leg): **Sora 2** (~8–12s, native audio, ~$0.84, simplest) or **Seedance 2 Pro 15s** (native audio, ~$1.35 480p / ~$3.60 720p — needs a **SIWX-capable** client to pull the result). Both bake audio in. Confirm the choice before rendering.
+**Then ASK the user which video model before rendering** (costly leg): **Sora 2** (~8–12s, 720p, native audio, ~$0.84, simplest — the default) or **Seedance 2 Pro** (up to 15s, 720p, native audio, ~$3.60 — only if you need 13–15s; needs a **SIWX-capable** client to pull the result). Both bake audio in. Confirm the choice before rendering.
 
 ## Workflow
 
@@ -50,7 +50,7 @@ Capture: **product/service**, **niche**, **region** (countryCode), and target **
 5. **Reference.** *Primary:* `clockworks~tiktok-video-scraper` with `shouldDownloadVideos`. *Fallback:* skip — proceed to generation with a strong written prompt only.
 6. **Generate the short.** Put the spoken line + scene/sound directly in the **prompt** (the model voices it — no separate audio step). The result MP4 already contains audio; download it as soon as the job completes (URLs expire).
    - **Sora 2 (default), ~8–12s:** POST `https://blockrun.ai/api/v1/videos/generations` `{model:"azure/sora-2", prompt, duration_seconds:8}` → it returns a `poll_url`; poll it (GET, x402 same wallet) until `status:"completed"` → download `data[0].url`.
-   - **Seedance 2 Pro, up to 15s:** POST `https://stablestudio.dev/api/generate/seedance/t2v` `{prompt, duration:"15", aspectRatio:"9:16", outputResolution:"480p"}` (use `"720p"` for higher quality at ~$3.60 vs ~$1.35) → it returns a `pollUrl`; **pull it via SIWX** — GET the `pollUrl`, get the `sign-in-with-x` 402 challenge, sign the nonce with the **same wallet that paid**, resend; repeat every ~30–60s (~5–6 min total) until `status:"complete"` → download `result.videoUrl`.
+   - **Seedance 2 Pro, up to 15s:** POST `https://stablestudio.dev/api/generate/seedance/t2v` `{prompt, duration:"15", aspectRatio:"9:16", outputResolution:"720p"}` (keep 720p; lower `duration` if you need to cut cost) → it returns a `pollUrl`; **pull it via SIWX** — GET the `pollUrl`, get the `sign-in-with-x` 402 challenge, sign the nonce with the **same wallet that paid**, resend; repeat every ~30–60s (~5–6 min total) until `status:"complete"` → download `result.videoUrl`.
 
 ## Output
 **ONE finished `.mp4`** — vertical 9:16, **with audio baked in** by the model — plus a short rationale (which winning hooks it was modeled on) and total cost.

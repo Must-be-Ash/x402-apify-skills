@@ -17,10 +17,10 @@ Every leg is a **paid x402 call** (USDC on Base, scheme `exact`), made with what
 **Apify legs:** `POST https://api.apify.com/v2/actors/<actorId>/run-sync-get-dataset-items?maxTotalChargeUsd=0.50` (actorId uses a **tilde**). x402 `exact` = **$1 captured, unused auto-refunded ~1h later**, payTo `0x4aAbE17C239eF71c3A26bA7C2b3e0AeBbfC1DF26`. `maxTotalChargeUsd` floor **$0.50**. Responses are large — extract only needed fields.
 
 > **⚠️ Apify reliability — READ before any Apify leg (the #1 cause of failed runs):**
-> Apify's x402 is **version 2**, and `run-sync-get-dataset-items` holds the connection open while the actor runs — your x402 client's internal timeout (Sponge ~60–90s) is the hard ceiling.
+> Apify's x402 is **version 2**, and `run-sync-get-dataset-items` holds the connection open while the actor runs — your x402 client's internal timeout (~60–90s) is the hard ceiling.
 > 1. **Minimize every call** so it finishes in-window: smallest `maxItems` (1–5), one query, no extra add-ons.
 > 2. **Heavy/cold-start actors can still exceed the window, and there is NO keyless async fallback** (Apify's async `/runs` start is x402-payable, but fetching the dataset then needs an Apify API key). If an actor keeps timing out, do NOT re-pay it bigger — the timed-out call already placed the $1 hold (refunds ~1h). Either supply an Apify API key or use a lighter alternative.
-> 3. **x402-client compatibility:** a **401 "payment payload invalid / could not be verified by the facilitator"** on Apify means your client doesn't interop with Apify's v2 facilitator — not a funds issue. **Sponge `paid_fetch` is verified working with Apify.** Clients like agentcash pay simpler v2 endpoints (Deepgram/Exa/Xona) fine but may 401 on Apify — route the Apify legs through Sponge, keep other legs on your client.
+> 3. **x402-client compatibility:** a **401 "payment payload invalid / could not be verified by the facilitator"** on Apify means your client doesn't interoperate with Apify's v2 facilitator — not a funds issue. Use a client that speaks x402 v2; some clients pay simpler v2 endpoints fine but 401 on Apify — if that happens, switch clients for the Apify legs.
 
 **⚠️ Outward sends (mail / email / phone) are IRREVERSIBLE and go to a real listing agent.** Draft the offer, show it + the recipient to the user, get **explicit per-send confirmation** before paying — especially physical **mail** ($3.40+, printed & mailed). Operator owns offer/outreach compliance.
 

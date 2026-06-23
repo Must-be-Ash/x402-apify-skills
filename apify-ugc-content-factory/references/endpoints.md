@@ -45,12 +45,12 @@ Two-step async. **Net ~$0.84 for 8s** (a $0.84 settles once, despite POST + poll
 3. **Download `data[0].url` immediately** (MP4 expires). It contains **h264 video + aac audio** (verified) — the spoken line + SFX are baked in. **No TTS / no ffmpeg mux needed.**
 
 ### LONGER — Seedance 2 Pro t2v, up to 15s, native audio ✅ verified 2026-06-22
-Verified: 15.07s, 9:16, h264+aac, one continuous shot. **~$1.35 at 480p / ~$3.60 at 720p** on Base (resolution drives price). Its result is pulled via **SIWX** (not a paid poll), so your x402 client must support SIWX.
-1. **POST** `https://stablestudio.dev/api/generate/seedance/t2v` (x402 `exact`; the body-specific 402 quotes the real price on Base, payTo `0x07F067959297767c887dbfA3C72379c66E82a045`; Solana + Tempo/MPP also offered):
+Verified: 15.07s, 9:16, h264+aac, one continuous shot. **720p, ~$3.60 at 15s** on Base. Use this only when you need 13–15s (for ≤12s, Sora 2 is cheaper). **To reduce cost, lower `duration` — keep `outputResolution` at `720p`** (480p looks too low). Its result is pulled via **SIWX** (not a paid poll), so your x402 client must support SIWX.
+1. **POST** `https://stablestudio.dev/api/generate/seedance/t2v` (x402 `exact`; the body-specific 402 quotes the real price on Base — price scales with `duration` — payTo `0x07F067959297767c887dbfA3C72379c66E82a045`; Solana + Tempo/MPP also offered):
    ```json
-   { "prompt": "<scene + spoken line>", "duration": "15", "aspectRatio": "9:16", "outputResolution": "480p" }
+   { "prompt": "<scene + spoken line>", "duration": "15", "aspectRatio": "9:16", "outputResolution": "720p" }
    ```
-   `duration` STRING `'4'..'15'`; `outputResolution` `480p|720p|1080p`; required: prompt, duration, aspectRatio, outputResolution. → `{ success, jobId, status:"pending", pollUrl }`.
+   `duration` STRING `'4'..'15'`; keep `outputResolution` `720p`; required: prompt, duration, aspectRatio, outputResolution. → `{ success, jobId, status:"pending", pollUrl }`.
 2. **Pull the result via SIWX** (free): GET `pollUrl` (= `https://stablestudio.dev/api/jobs/{jobId}`). The unpaid GET returns a 402 carrying a `sign-in-with-x` challenge (a nonce, ~5-min validity). **Sign the nonce with the same wallet that paid** and resend. Repeat every ~30–60s (~5–6 min; `status` pending→loading(progress%)→`complete`), re-signing a fresh nonce each time.
-   - **What is SIWX:** an x402 extension that proves wallet identity by *signature* instead of *payment* (like Sign-In-With-Ethereum) — free. Many x402 v2 clients do it automatically; if yours doesn't, sign the challenge's nonce with the paying wallet and attach it. (This repo's internal tooling: `qa-pay … --method=GET --siwx`.)
+   - **What is SIWX:** an x402 extension that proves wallet identity by *signature* instead of *payment* (like Sign-In-With-Ethereum) — free. Many x402 v2 clients handle it automatically; if yours doesn't, sign the challenge's nonce with the paying wallet and attach it to the GET.
 3. On `complete`, download `result.videoUrl` (expires ~20min). It already contains audio — no separate voiceover needed.
