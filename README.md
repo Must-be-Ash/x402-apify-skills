@@ -41,7 +41,7 @@ Then start a new session and invoke it by name (e.g. `/apify-geo-content-radar`)
 
 - **Outward sends are gated.** Any irreversible action (email, phone call, physical mail) requires explicit per-send confirmation in the skill — nothing is sent automatically.
 - **You own compliance.** Outreach is subject to CAN-SPAM, TCPA, GDPR, and local rules; data use is subject to each platform's terms. Use responsibly.
-- **Costs are real.** Each leg spends real USDC. Prices and behaviors are documented per endpoint and were verified where noted, but third-party endpoints can change — confirm the live 402 quote before paying.
+- **Costs are real.** Each leg spends real USDC. Prices and behaviors are documented per endpoint, but third-party endpoints can change — confirm the live 402 quote before paying.
 
 ## Status
 

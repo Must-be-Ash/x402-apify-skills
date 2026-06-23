@@ -99,7 +99,7 @@ URL: `https://api.apify.com/v2/actors/trudax~reddit-scraper-lite/run-sync-get-da
 }
 ```
 
-`sort` enum: `relevance|hot|top|new|rising`. `time` enum: `all|hour|day|week|month|year`. **Prefer `startUrls` from Step 2** — free-text `searches` with a long phrase returns irrelevant junk (verified). Returned fields per item: `dataType, title, body, communityName, url, username, createdAt` — **no `upVotes`/`numberOfComments`** (the *lite* actor omits engagement; rank by Google's Step-2 order or use a non-lite Reddit actor). **What to extract:** titles/bodies + comments → recurring pain points, questions, verbatim phrasing.
+`sort` enum: `relevance|hot|top|new|rising`. `time` enum: `all|hour|day|week|month|year`. **Prefer `startUrls` from Step 2** — free-text `searches` with a long phrase tends to return irrelevant posts. Returned fields per item: `dataType, title, body, communityName, url, username, createdAt` — **no `upVotes`/`numberOfComments`** (the *lite* actor omits engagement; rank by Google's Step-2 order or use a non-lite Reddit actor). **What to extract:** titles/bodies + comments → recurring pain points, questions, verbatim phrasing.
 
 ---
 

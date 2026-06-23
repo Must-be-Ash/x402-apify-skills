@@ -12,7 +12,7 @@ Then per-product: `{ "mode": "product", "urls": ["<productUrl>"] }` and reviews:
 
 ## Supplements
 
-- **Exa Search** (first-party): `POST https://api.exa.ai/search` · **$0.007 exact** · payTo `0x6d6E695b09861467c7d462f5AAF31cF3540B9192` · `{ "query": "<category> demand trend 2026", "numResults": 5 }`
+- **Exa Search** (first-party): `POST https://api.exa.ai/search` · **$0.007 exact** · payTo `0x6d6E695b09861467c7d462f5AAF31cF3540B9192` · `{ "query": "<category> demand trend", "numResults": 5 }`
 - **Exa Contents** (first-party): `POST https://api.exa.ai/contents` · **$0.001 exact** · same payTo · `{ "urls": ["<url>"] }`
 
 ## Listing creative — DEFAULT: Orthogonal Nano Banana 2

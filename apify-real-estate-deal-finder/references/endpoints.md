@@ -18,7 +18,7 @@ Note: `tri_angle~real-estate-aggregator` exists on Apify but is outside our loca
 
 ## Supplements
 
-- **Exa Search** (first-party): `POST https://api.exa.ai/search` · **$0.007 exact** · payTo `0x6d6E695b09861467c7d462f5AAF31cF3540B9192` · `{ "query": "<city> real estate market development 2026", "numResults": 5 }`
+- **Exa Search** (first-party): `POST https://api.exa.ai/search` · **$0.007 exact** · payTo `0x6d6E695b09861467c7d462f5AAF31cF3540B9192` · `{ "query": "<city> real estate market development", "numResults": 5 }`
 
 ## Offer send (IRREVERSIBLE — confirm each send first; goes to a real listing agent)
 

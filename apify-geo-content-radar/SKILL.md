@@ -54,7 +54,7 @@ Capture, per engine: the AI answer text + the sources it cites, plus the organic
 In the same step (or a second call), run `site:reddit.com <topic>` queries through `apify~google-search-scraper` to surface the highest-engagement Reddit threads. Collect their URLs for Step 3.
 
 ### Step 3 — Reddit pain points
-Actor `trudax~reddit-scraper-lite`. **Strongly prefer feeding the thread URLs discovered in Step 2 as `startUrls`** — free-text `searches` with a long phrase returns largely irrelevant posts (verified: a phrase query surfaced r/conspiracy junk). Pull posts + comments → recurring **pain points, questions, and verbatim phrasing**. Caveat: the *lite* actor returns `title/body/url/community` but **no engagement metrics** (`upVotes`/`numberOfComments` are null), so rank by Step-2 discovery order (Google already ranked them) or swap in a non-lite Reddit actor if you need scores.
+Actor `trudax~reddit-scraper-lite`. **Strongly prefer feeding the thread URLs discovered in Step 2 as `startUrls`** — free-text `searches` with a long phrase tends to return largely irrelevant posts. Pull posts + comments → recurring **pain points, questions, and verbatim phrasing**. Caveat: the *lite* actor returns `title/body/url/community` but **no engagement metrics** (`upVotes`/`numberOfComments` are null), so rank by Step-2 discovery order (Google already ranked them) or swap in a non-lite Reddit actor if you need scores.
 
 ### Step 4 — X / Twitter listening (optional booster)
 Actor `apidojo~tweet-scraper`. Run `searchTerms` on the topic keywords for real-time pain points and content angles. Skip if the user opted out.
